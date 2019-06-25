@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>同步结果</title>
+    <meta name="generator" content="HTMLTestRunner 0.9.1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.common.min.js"></script>
+    <!-- <script type="text/javascript" src="js/echarts.common.min.js"></script> -->
+
+    
+<style type="text/css" media="screen">
+    body        { font-family: Microsoft YaHei,Consolas,arial,sans-serif; font-size: 80%; }
+    table       { font-size: 100%; }
+    pre         { white-space: pre-wrap;word-wrap: break-word; }
+    /* -- heading ---------------------------------------------------------------------- */
+    h1 {
+        font-size: 16pt;
+        color: gray;
+    }
+    .heading {
+        margin-top: 0ex;
+        margin-bottom: 1ex;
+    }
+    .heading .attribute {
+        margin-top: 1ex;
+        margin-bottom: 0;
+    }
+    .heading .description {
+        margin-top: 2ex;
+        margin-bottom: 3ex;
+    }
+    /* -- css div popup ------------------------------------------------------------------------ */
+    a.popup_link {
+    }
+    a.popup_link:hover {
+        color: red;
+    }
+    .popup_window {
+        display: none;
+        position: relative;
+        left: 0px;
+        top: 0px;
+        /*border: solid #627173 1px; */
+        padding: 10px;
+        /*background-color: #E6E6D6; */
+        font-family: "Lucida Console", "Courier New", Courier, monospace;
+        text-align: left;
+        font-size: 8pt;
+        /* width: 500px;*/
+    }
+    }
+    /* -- report ------------------------------------------------------------------------ */
+    #show_detail_line {
+        margin-top: 3ex;
+        margin-bottom: 1ex;
+    }
+    #result_table {
+        width: 99%;
+    }
+    #header_row {
+        font-weight: bold;
+        color: #303641;
+        background-color: #ebebeb;
+    }
+    #total_row  { font-weight: bold; }
+    .passClass  { background-color: #bdedbc; }
+    .failClass  { background-color: #ffefa4; }
+    .errorClass { background-color: #ffc9c9; }
+    .passCase   { color: #6c6; }
+    .failCase   { color: #FF6600; font-weight: bold; }
+    .errorCase  { color: #c00; font-weight: bold; }
+    .hiddenRow  { display: none; }
+    .testcase   { margin-left: 2em; }
+    /* -- ending ---------------------------------------------------------------------- */
+    #ending {
+    }
+    #div_base {
+                position:absolute;
+                top:0%;
+                left:5%;
+                right:5%;
+                width: auto;
+                height: auto;
+                margin: -15px 0 0 0;
+    }
+</style>
+
+
+</head>
+<body>
+    <script language="javascript" type="text/javascript"><!--
+    output_list = Array();
+    /* level - 0:Summary; 1:Failed; 2:All */
+    function showCase(level) {
+        trs = document.getElementsByTagName("tr");
+        for (var i = 0; i < trs.length; i++) {
+            tr = trs[i];
+            id = tr.id;
+            if (id.substr(0,2) == 'ft') {
+                if (level < 1) {
+                    tr.className = 'hiddenRow';
+                }
+                else {
+                    tr.className = '';
+                }
+            }
+            if (id.substr(0,2) == 'pt') {
+                if (level > 1) {
+                    tr.className = '';
+                }
+                else {
+                    tr.className = 'hiddenRow';
+                }
+            }
+        }
+    }
+    function showClassDetail(cid, count) {
+        var id_list = Array(count);
+        var toHide = 1;
+        for (var i = 0; i < count; i++) {
+            tid0 = 't' + cid.substr(1) + '.' + (i+1);
+            tid = 'f' + tid0;
+            tr = document.getElementById(tid);
+            if (!tr) {
+                tid = 'p' + tid0;
+                tr = document.getElementById(tid);
+            }
+            id_list[i] = tid;
+            if (tr.className) {
+                toHide = 0;
+            }
+        }
+        for (var i = 0; i < count; i++) {
+            tid = id_list[i];
+            if (toHide) {
+                document.getElementById('div_'+tid).style.display = 'none'
+                document.getElementById(tid).className = 'hiddenRow';
+            }
+            else {
+                document.getElementById(tid).className = '';
+            }
+        }
+    }
+    function showTestDetail(div_id){
+        var details_div = document.getElementById(div_id)
+        var displayState = details_div.style.display
+        // alert(displayState)
+        if (displayState != 'block' ) {
+            displayState = 'block'
+            details_div.style.display = 'block'
+        }
+        else {
+            details_div.style.display = 'none'
+        }
+    }
+    function html_escape(s) {
+        s = s.replace(/&/g,'&amp;');
+        s = s.replace(/</g,'&lt;');
+        s = s.replace(/>/g,'&gt;');
+        return s;
+    }
+    /* obsoleted by detail in <div>
+    function showOutput(id, name) {
+        var w = window.open("", //url
+                        name,
+                        "resizable,scrollbars,status,width=800,height=450");
+        d = w.document;
+        d.write("<pre>");
+        d.write(html_escape(output_list[id]));
+        d.write("\n");
+        d.write("<a href='javascript:window.close()'>close</a>\n");
+        d.write("</pre>\n");
+        d.close();
+    }
+    */
+    --></script>
+    <div id="div_base">
+        
+    <div class='page-header'>
+        <h1>同步结果</h1>
+    <p class='attribute'><strong>开始时间:</strong> 2019-03-29 10:21:01</p>
+<p class='attribute'><strong>运行时长:</strong> 0:00:06.726385</p>
+<p class='attribute'><strong>状态:</strong> 通过 3 错误 1</p>
+
+    </div>
+    <div style="float: left;width:50%;"><p class='description'>同步结果</p></div>
+    <div id="chart" style="width:50%;height:400px;float:left;"></div>
+
+        
+    <div class="btn-group btn-group-sm">
+        <button class="btn btn-default" onclick='javascript:showCase(0)'>总结</button>
+        <button class="btn btn-default" onclick='javascript:showCase(1)'>失败</button>
+        <button class="btn btn-default" onclick='javascript:showCase(2)'>全部</button>
+    </div>
+    <p></p>
+    <table id='result_table' class="table table-bordered">
+        <colgroup>
+            <col align='left' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+        </colgroup>
+        <tr id='header_row'>
+            <td>测试套件/测试用例</td>
+            <td>总数</td>
+            <td>通过</td>
+            <td>失败</td>
+            <td>错误</td>
+            <td>查看</td>
+        </tr>
+        
+    <tr class='passClass'>
+        <td>paramunittest.SignIn_0</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c1',1)">详情</a></td>
+    </tr>
+
+<tr id='pt1.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>testSignIn</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.1')" >
+        通过</a>
+    <div id='div_pt1.1' class="popup_window">
+        <pre>pt1.1: login测试开始前准备
+第一步：设置url  http://mall.api.epet.com/v3/login.html?do=postSubmit
+http://mall.api.epet.com/v3/login.html?do=postSubmit
+第四步：发送请求
+		请求方法：post
+第五步：检查结果
+{"msg":"\u767b\u5f55\u6210\u529f\uff01","code":"succeed","login_status":1,"mall_uid":"epet_4623","mall_user":"epet","sys_time":1553826088,"hash":"","epet_site":"epet","chanel_url":"","key":"https:\/\/passport.gutou.com\/autologin.html?key=4XV4ZWWUsqF6p2y9eo-ra6hmZ2Vkm7LDj-NtprI","push_alias":"appmall_4623","push_tags":"version0,sign,tmp3_tem14_tag1182,tmp4_tem31_tag25,tmp4_tem31_tag24,tmp4_tem31_tag24,tmp4_tem31_tag25,tmp4_tem31_tag24,tmp4_tem31_tag27,tmp4_tem31_tag26,tmp4_tem31_tag24,tmp4_tem31_tag25,tmp4_tem31_tag25,tmp4_tem31_tag24,tmp4_tem31_tag24,tmp4_tem31_tag25,tmp4_tem31_tag24,tmp4_tem31_tag24,tmp4_tem31_tag24,tmp4_tem31_tag24,tmp4_tem31_tag24,tmp4_tem31_tag24,tmp4_tem31_tag24,tmp4_tem31_tag24,tmp4_tem31_tag24,tmp4_tem31_tag24,tmp4_tem31_tag25,tmp4_tem31_tag25,tmp4_tem31_tag25,tmp4_tem31_tag24,tmp4_tem31_tag24,tmp4_tem31_tag24","refresh_pages":[{"page":"main","param":"1,59"}],"token":"oJuimPDE2dPo4aOmmqycn6KYoZqh4aWUnqGsl6iemazloaCZow","show_bind":0,"pop_pet":0,"alert_target":[{"text":"\u6211\u77e5\u9053\u4e86","target":""}]}
+succeed
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+    <tr class='passClass'>
+        <td>paramunittest.SignIn_1</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c2',1)">详情</a></td>
+    </tr>
+
+<tr id='pt2.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>testSignIn</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt2.1')" >
+        通过</a>
+    <div id='div_pt2.1' class="popup_window">
+        <pre>pt2.1: login测试开始前准备
+第一步：设置url  http://mall.api.epet.com/v3/login.html?do=postSubmit
+http://mall.api.epet.com/v3/login.html?do=postSubmit
+第四步：发送请求
+		请求方法：post
+第五步：检查结果
+{"msg":"\u767b\u5f55\u6210\u529f\uff01","code":"succeed","login_status":1,"mall_uid":"epet_4095538","mall_user":"\u5434\u5f69\u5a77","sys_time":1553826090,"hash":"","epet_site":"epet","chanel_url":"","key":"https:\/\/passport.gutou.com\/autologin.html?key=pGuUbGrbsqF0rm52fJLyaaVpZGxlmWefdPGRmX6P46Q","push_alias":"appmall_4095538","push_tags":"version0,admin,sign,tmp3_tem14_tag1179,tmp4_tem31_tag24,tmp4_tem31_tag24","refresh_pages":[{"page":"main","param":"1,59"}],"token":"oJWpmqmSoepZ9SZTHh1OGCXdnOGhmqmSoaCqlaue3aqfo6Q","show_bind":0,"pop_pet":0,"alert_target":[{"text":"\u6211\u77e5\u9053\u4e86","target":""}]}
+succeed
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+    <tr class='passClass'>
+        <td>paramunittest.SignIn_2</td>
+        <td>1</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c3',1)">详情</a></td>
+    </tr>
+
+<tr id='pt3.1' class='hiddenRow'>
+    <td class='none'><div class='testcase'>testSignIn</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt3.1')" >
+        通过</a>
+    <div id='div_pt3.1' class="popup_window">
+        <pre>pt3.1: login测试开始前准备
+第一步：设置url  http://mall.api.epet.com/v3/login.html?do=postSubmit
+http://mall.api.epet.com/v3/login.html?do=postSubmit
+第四步：发送请求
+		请求方法：post
+第五步：检查结果
+{"msg":"\u767b\u5f55\u6210\u529f\uff01","code":"succeed","login_status":1,"mall_uid":"epet_4532669","mall_user":"\u4e3b\u4eba_4Nncs7G9eq","sys_time":1553826090,"hash":"","epet_site":"epet","chanel_url":"","key":"https:\/\/passport.gutou.com\/autologin.html?key=44F3rXiTsqF5qGt3f5PyaaVpZGxlmWefdPGylKGLy4s","push_alias":"appmall_4532669","push_tags":"version0,tmp3_tem14_tag1177,tmp4_tem31_tag24","refresh_pages":[{"page":"main","param":"1,59"}],"token":"oJqjl6qVoupYHS1SGy7Io7zPz9inrK3E2uqlnKmlk6eiqKeYoeGhmqmSoaCqlaue3aqipKI","show_bind":0,"pop_pet":0,"alert_target":[{"text":"\u6211\u77e5\u9053\u4e86","target":""}]}
+succeed
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+    <tr class='errorClass'>
+        <td>paramunittest.SignIn_0</td>
+        <td>1</td>
+        <td>0</td>
+        <td>0</td>
+        <td>1</td>
+        <td><a href="javascript:showClassDetail('c4',1)">详情</a></td>
+    </tr>
+
+<tr id='ft4.1' class='none'>
+    <td class='errorCase'><div class='testcase'>testOrder</div></td>
+    <td colspan='5' align='center'>
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft4.1')" >
+        错误</a>
+    <div id='div_ft4.1' class="popup_window">
+        <pre>ft4.1: {'msg': '登录成功！', 'code': 'succeed', 'login_status': 1, 'mall_uid': 'epet_2656704', 'mall_user': '胡建骥', 'sys_time': 1553826091, 'hash': '', 'epet_site': 'epet', 'chanel_url': '', 'key': 'http://passport.gutou.com/autologin.html?key=qJh8bKnHsp96qm94eY7yaaVpZGxlmWefdfF8jZaP4q4', 'push_alias': 'appmall_2656704', 'push_tags': 'version0,admin,tmp3_tem12_tag90,tmp4_tem1_tag24,tmp4_tem1_tag24', 'refresh_pages': [{'page': 'main', 'param': '1,59'}], 'token': 'npulm6uPnepc6BNTHC5SGRPdnZ2onaeSn6WslqLqkqmeoqaTopWplvCWoqKn', 'show_bind': 0, 'pop_pet': 0, 'alert_target': [{'text': '我知道了', 'target': ''}]}
+测试开始前准备
+第一步：设置url  http://mallapi.dev.epet.com/v3/cart?do=check&amp;type=goods&amp;isweb=1&amp;system=wap&amp;version=335
+http://mallapi.dev.epet.com/v3/cart?do=check&amp;type=goods&amp;isweb=1&amp;system=wap&amp;version=335
+第二步骤：发送请求
+		请求方法：get
+第三步骤：检查结果
+
+{"msg":"","code":"succeed","login_status":1,"mall_uid":"epet_2656704","mall_user":"\u80e1\u5efa\u9aa5","sys_time":1553826091,"hash":"","epet_site":"epet","is_selected":"0","cart_tip":"","orders":[{"wid":"1","display_name":"\u897f\u90e8\u5927\u4ed3","display_tip":"\u4ee5\u4e0b\u5546\u54c1\u7531\u897f\u90e8\u5927\u4ed3\u53d1\u8d27\uff0c\u5168\u56fd\u6ee199\u5143\u5305\u90ae\uff0c\u90e8\u5206\u5730\u533a\u6ee158\u5143\u5305\u90ae\uff08\u987a\u4e30\u3001EMS\u4e0d\u5305\u90ae\uff09\uff0c\u652f\u6301\u4f59\u989d\u652f\u4ed8\u3001\u8d27\u5230\u4ed8\u6b3e\u3001\u5728\u7ebf\u652f\u4ed8!","csscode":"epetfh","cessdel":1,"is_selected":"0","tariffStart":"0.00","cart_tip":"","top_replace":0,"list":[{"gid":"248813","subject":"\u8302\u6e90 \u8f6f\u9e21\u8089\u6761 50g","photo":"http:\/\/img1.dev.epetbar.com\/2018-12\/24\/11\/fcc8b6d08c6b8456c33e45ccc91f5ce4.jpg","market_price":"5.50","price":"0.00","sale_price":"5.00","sumprice":"0.00","buynum":"1","limitnum":"0","phead":"[\u8ba2\u5355\u8d60\u54c1]","buytype":"crm_v3","disable_num":"1","stock_now":"\u8fd8\u52691\u888b","brandid":"90","stock_tip":"\u8fd8\u52691\u888b\uff0c\u8be5\u51fa\u624b\u65f6\u8d76\u7d27\u51fa\u624b\u554a\uff01","tip":"","tip_button":{},"hasWithbuy":0,"withbuyTip":"","wtid":0,"withbuyParam":"{\"return\":\"return\",\"channel_id\":417}","is_selected":"1","isCanSelect":true,"withbuyCount ":0,"haspayTip":"","hasFreeOne":0,"freeOneTip":"","keyword":"","changeNum":{"can_add":0,"can_sub":0},"credits":0,"icons":[],"newIcons":[],"cessTip":"","cesspoint":"","cessShow":0},{"gid":"110567","subject":"\u54c8\u7f57\u4f69\u7279HELLO PET \u72ac\u4e13\u4e1a\u7f8e\u5bb9\u6392\u68b3 \u5c0f\u53f7","photo":"http:\/\/img1.dev.epetbar.com\/2015-08\/01\/609bd43182cb3abac4defb1d1994a063.jpg","market_price":"33.00","price":"0.00","sale_price":"27.00","sumprice":"0.00","buynum":"1","limitnum":"0","phead":"[\u8ba2\u5355\u8d60\u54c1]","buytype":"crm_v3","disable_num":"1","stock_now":"","brandid":"5","stock_tip":"\u6709\u8d27","tip":"","tip_button":{},"hasWithbuy":0,"withbuyTip":"","wtid":0,"withbuyParam":"{\"return\":\"return\",\"channel_id\":417}","is_selected":"1","isCanSelect":true,"withbuyCount ":0,"haspayTip":"","hasFreeOne":0,"freeOneTip":"","keyword":"","changeNum":{"can_add":0,"can_sub":0},"credits":0,"icons":[],"newIcons":[],"cessTip":"","cesspoint":"","cessShow":0},{"gid":"145848","subject":"NOW FRESH \u65e0\u8c37\u5927\u578b\u72ac\u6210\u72ac\u7cae 12\u78c5","photo":"http:\/\/img1.dev.epetbar.com\/2016-06\/18\/16\/c67b9ac4617aa158618b6ab3e6ea543c.jpg","market_price":"623.00","price":"0.00","sale_price":"519.00","sumprice":"0.00","buynum":"1","limitnum":"0","phead":"[\u8ba2\u5355\u8d60\u54c1]","buytype":"crm_v3","disable_num":"1","stock_now":"\u8fd8\u526910\u888b","brandid":"3","stock_tip":"\u6709\u8d27","tip":"","tip_button":{},"hasWithbuy":0,"withbuyTip":"","wtid":0,"withbuyParam":"{\"return\":\"return\",\"channel_id\":417}","is_selected":"1","isCanSelect":true,"withbuyCount ":0,"haspayTip":"","hasFreeOne":0,"freeOneTip":"","keyword":"","changeNum":{"can_add":0,"can_sub":0},"credits":0,"icons":[],"newIcons":[],"cessTip":"","cesspoint":"","cessShow":0},{"gid":"210550","subject":"\u91d1\u5ba0 \u5ba0\u7269\u5929\u7136\u9664\u81ed\u5242158ml \u65e0\u5473","photo":"http:\/\/img1.dev.epetbar.com\/2017-08\/18\/13\/1ead704bf011f338bf60ea620ad7a777.jpg","market_price":"45.00","price":"0.00","sale_price":"38.00","sumprice":"0.00","buynum":"1","limitnum":"0","phead":"[\u8ba2\u5355\u8d60\u54c1]","buytype":"crm_v3","disable_num":"1","stock_now":"","brandid":"1624","stock_tip":"\u6709\u8d27","tip":"","tip_button":{},"hasWithbuy":0,"withbuyTip":"","wtid":0,"withbuyParam":"{\"return\":\"return\",\"channel_id\":417}","is_selected":"1","isCanSelect":true,"withbuyCount ":0,"haspayTip":"","hasFreeOne":0,"freeOneTip":"","keyword":"","changeNum":{"can_add":0,"can_sub":0},"credits":0,"icons":[{"src":"http:http:\/\/static.dev.epetbar.com\/www\/cart\/noCargo.png"}],"newIcons":[{"img_size":"110X30","target":[],"image":"http:\/\/static.dev.epetbar.com\/static_web\/wap\/src\/images\/cart\/noCargo.png"}],"cessTip":"","cesspoint":"","cessShow":0},{"gid":"244638","subject":"\u76ca\u548c \u84b8\u5fc3\u9e21\u5757\u72d7\u7f50\u5934 100g*8\u7f50","photo":"http:\/\/img1.dev.epetbar.com\/2018-07\/13\/23\/83b9e6c0c86bf6d00e694633a5af0540.jpg","market_price":"88.00","price":"60.00","sale_price":"60.00","sumprice":"60.00","buynum":"1","limitnum":"0","phead":"","buytype":"","disable_num":"0","stock_now":"\u8fd8\u526910\u76d2","brandid":"2034","stock_tip":"\u6709\u8d27","tip":"","tip_button":{},"hasWithbuy":0,"withbuyTip":"","wtid":0,"withbuyParam":"","is_selected":"1","isCanSelect":true,"withbuyCount ":0,"haspayTip":"","hasFreeOne":0,"freeOneTip":"","keyword":"","changeNum":{"can_add":1,"can_sub":0},"credits":6,"icons":[],"newIcons":[],"cessTip":"","cesspoint":"","cessShow":0},{"gid":"100066","subject":"\u62cd\u62d6\u5b9d\u8d1d \u67d4\u8f6f\u9e21\u8089\u6761 200g","photo":"http:\/\/img1.dev.epetbar.com\/2016-10\/26\/18\/be9526342c828cccf7ea0092a593de72.jpg","market_price":"40.00","price":"33.00","sale_price":"33.00","sumprice":"33.00","buynum":"1","limitnum":"0","phead":"","buytype":"","disable_num":"0","stock_now":"","brandid":"25","stock_tip":"\u6709\u8d27","tip":"","tip_button":{},"hasWithbuy":0,"withbuyTip":"","wtid":0,"withbuyParam":"","is_selected":"0","isCanSelect":true,"withbuyCount ":0,"haspayTip":"","hasFreeOne":0,"freeOneTip":"","keyword":"","changeNum":{"can_add":1,"can_sub":0},"credits":3,"icons":[],"newIcons":[],"cessTip":"","cesspoint":"","cessShow":0}],"order_present_goods":[],"cessTotal":"0.00","currentprices":0,"free":99,"real_free":99,"baoyou_status":1,"baoyou_tips":"\u8ba2\u5355\u5df2\u5305\u90ae","baoyou_title":"\u5df2\u5305\u90ae"}],"isCanCheckOut":1,"icons":{"epetfh":{"icon":"epetfh.png","color":"#6acd34"}},"staticUrl":"http:\/\/static.dev.epetbar.com\/www\/cart\/","sum":{"cessDelete":0,"cessTip":"","totalnum":6,"priceFinal":"60.00","goodsNumTotal":6,"ePlusDiscount":{}},"redemption":{},"vipTaste":{"sign":"0\u5143\u4f53\u9a8c","isCanVipTaste":1,"tip_left":"\u60a8\u672c\u6708\u8fd8\u6709","tip_right":"\u6b210\u5143\u4f53\u9a8c\u673a\u4f1a\u54e6\uff0c\u5feb\u53bb\u9009\u8d2d\u5427\uff01&gt;","num":"3","target":{"mode":"web","param":"http:\/\/wap.dev.epet.com\/app\/experience\/index","epet_site":"epet"}},"delList":0,"fishdata":{"needChooseAddr":0,"fishTipMsg":""},"alert_target":[{"text":"\u6211\u77e5\u9053\u4e86","target":""}]}
+Traceback (most recent call last):
+  File "D:\doit\dointerface\cases\test_order.py", line 64, in testOrder
+    self.checkResult()
+  File "D:\doit\dointerface\cases\test_order.py", line 85, in checkResult
+    m_list=parseObject()
+NameError: name 'parseObject' is not defined
+</pre>
+    </div>
+    <!--css div popup end-->
+    </td>
+</tr>
+
+        <tr id='total_row'>
+            <td>总计</td>
+            <td>4</td>
+            <td>3</td>
+            <td>0</td>
+            <td>1</td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+
+        <div id='ending'>&nbsp;</div>
+        
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('chart'));
+        // 指定图表的配置项和数据
+        var option = {
+            title : {
+                text: '测试执行情况',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            color: ['#95b75d', 'grey', '#b64645'],
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['通过','失败','错误']
+            },
+            series : [
+                {
+                    name: '测试执行情况',
+                    type: 'pie',
+                    radius : '60%',
+                    center: ['50%', '60%'],
+                    data:[
+                        {value:3, name:'通过'},
+                        {value:0, name:'失败'},
+                        {value:1, name:'错误'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+    
+    </div>
+</body>
+</html>
