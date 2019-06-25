@@ -24,7 +24,7 @@ def getIndexOfValue(str1,str2):
                 return i
             else:
                 print ("not found")
-        return  0
+        return 2
 
 if __name__=='__main__':
     getIndexOfValue('hu,jian,ji','hu,jian,ji')
